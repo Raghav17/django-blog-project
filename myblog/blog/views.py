@@ -10,13 +10,13 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 class AboutView(TemplateView):
-    template_name = 'about.html '
+    template_name = 'about.html'
  
 class PostListView(ListView):
     model = Post
     
     def get_queryset(self):
-        return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date'))
+        return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 
 class PostDetailView(DetailView):
     model = Post
@@ -75,7 +75,7 @@ def comment_remove(request,pk):
     return redirect('post_detail',pk=post_pk)
 
 @login_required
-def post_publish(reques,pk):
+def post_publish(request,pk):
     post = get_object_or_404(Post,pk=pk)
-    post.publish
+    post.publish()
     return redirect('post_detail',pk=pk)
